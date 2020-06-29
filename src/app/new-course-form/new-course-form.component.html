@@ -3,7 +3,7 @@
   <ul>
     <li
       (click)="removeTopic(topic)"
-      *ngFor="let topic of form.get('topics').value"
+      *ngFor="let topic of form.get('topics')?.value"
     >
       {{ topic }}
     </li>

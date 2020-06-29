@@ -13,31 +13,34 @@ import {
   styleUrls: ['./new-course-form.component.scss'],
 })
 export class NewCourseFormComponent implements OnInit {
-  form: FormGroup;
   constructor(fb: FormBuilder) {
-    this.form = fb.group({
-      name: ['', Validators.required],
-      contact: fb.group({
-        email: [],
-        phone: [],
-      }),
-      topic: fb.array([]),
-    });
+    // this.form = fb.group({
+    //   name: ['', Validators.required],
+    //   contact: fb.group({
+    //     email: [],
+    //     phone: [],
+    //   }),
+    //   topic: fb.array([]),
+    // });
   }
 
   ngOnInit(): void {}
 
-  // form = new FormGroup({
-  //   topics: new FormArray([]),
-  //   name: new FormControl(),
-  //   contact: new FormGroup({
-  //     email: new FormControl(),
-  //     phone: new FormControl(),
-  //   }),
-  // });
+  form = new FormGroup({
+    topics: new FormArray([]),
+    name: new FormControl(),
+    contact: new FormGroup({
+      email: new FormControl(),
+      phone: new FormControl(),
+    }),
+  });
+
+  get topics() {
+    return this.form.get('topics') as FormArray;
+  }
 
   addTopic(topic: HTMLInputElement) {
-    this.topics.push(new FormControl(topic.value));
+    this.topics.push(new FormControl(topic?.value));
     topic.value = '';
   }
 
@@ -45,9 +48,5 @@ export class NewCourseFormComponent implements OnInit {
     console.log(this.topics);
     let index = this.topics.controls.indexOf(topic);
     this.topics.removeAt(index);
-  }
-
-  get topics() {
-    return this.form.get('topics') as FormArray;
   }
 }
